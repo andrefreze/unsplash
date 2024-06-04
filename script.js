@@ -1,46 +1,29 @@
-function saveReview() {
-  const productName = document.querySelector('input[type="text"]').value;
-  const reviewText = document.querySelector('textarea').value;
+const apiKey = 'tFrt3CaOfn3eCXkoSBFAr8Ju3fUc6hy7vv8-JK7WPfA';
+const imageContainer = document.querySelector('.image-container');
+const imageElement = document.querySelector('.image');
+const photographerInfoElement = document.querySelector('.photographer-info');
+const likeButton = document.querySelector('.like-button');
+const likesCountElement = document.querySelector('.likes-count');
 
-  if (!productName || !reviewText) return alert('Пожалуйста, заполните все поля');
+let likesCount = 0;
 
+function getRandomImage() {
+    fetch(`https://api.unsplash.com/photos/random?client_id=${apiKey}`)
+        .then(response => response.json())
+        .then(data => {
+            const imageUrl = data.urls.regular;
+            const photographerName = data.user.name;
+            const photographerUsername = data.user.username;
 
-  localStorage.setItem(`${productName}-review`, JSON.stringify({
-    title: productName,
-    text: reviewText
-  }));
-
-  showReviews();
+            imageElement.src = imageUrl;
+            photographerInfoElement.innerHTML = `Фотограф: <a href="https://unsplash.com/@${photographerUsername}" target="_blank">${photographerName}</a>`;
+        })
+        .catch(error => console.error(error));
 }
 
-function showReviews() {
-  const reviewsList = document.getElementById('reviewsList');
-  reviewsList.innerHTML = ''; // Очищаем предыдущий список
+getRandomImage();
 
-  for (const key of Object.keys(localStorage)) {
-    if (key.includes('-review')) {
-      const reviewData = JSON.parse(localStorage.getItem(key));
-      createReviewElement(reviewData);
-    }
-  }
-}
-
-function createReviewElement(reviewData) {
-  const reviewsList = document.getElementById('reviewsList');
-  const div = document.createElement('div');
-  div.className = 'review';
-  div.innerHTML = `
-    <h3>${reviewData.title}</h3>
-    <p>${reviewData.text}</p>
-    <button onclick="deleteReview(${JSON.stringify(reviewData)})">Удалить</button>
-  `;
-  reviewsList.appendChild(div);
-}
-
-function deleteReview(reviewData) {
-  const key = `${reviewData.title}-review`;
-  localStorage.removeItem(key);
-  showReviews();
-}
-
-showReviews();
+likeButton.addEventListener('click', () => {
+    likesCount++;
+    likesCountElement.textContent = `Лайков: ${likesCount}`;
+});

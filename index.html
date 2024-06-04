@@ -1,22 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Отзывы</title>
-<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Unsplash Image</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .image-container {
+            width: 80%;
+            margin: 40px auto;
+            text-align: center;
+        }
+        .image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .photographer-info {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #666;
+        }
+        .like-button {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .like-button:hover {
+            background-color: #3e8e41;
+        }
+        .likes-count {
+            font-size: 18px;
+            color: #666;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
+    <div class="image-container">
+        <img src="" alt="Random Unsplash Image" class="image">
+        <div class="photographer-info"></div>
+        <button class="like-button">Лайк</button>
+        <div class="likes-count">Лайков: 0</div>
+    </div>
 
-<div id="addReview">
-  <input type="text" placeholder="Название продукта" required>
-  <textarea placeholder="Ваш отзыв"></textarea>
-  <button onclick="saveReview()">Добавить отзыв</button>
-</div>
-
-<div id="reviewsList">
-</div>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
